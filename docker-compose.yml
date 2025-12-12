@@ -69,12 +69,12 @@ services:
       postgres:
         condition: service_healthy
     restart: unless-stopped
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - capabilities: [gpu]
-    shm_size: 8gb
+ #   deploy:
+ #     resources:
+ #       reservations:
+ #         devices:
+ #           - capabilities: [gpu]
+ #   shm_size: 8gb
 
   streamlit:
     build:

@@ -1,0 +1,14 @@
+artifact_uri: file:///mlflow/mlruns/137689065165859176/f9a0e32c04984ad199ebd31b62d9c1cc/artifacts
+end_time: 1751705030142
+entry_point_name: ''
+experiment_id: '137689065165859176'
+lifecycle_stage: active
+run_id: f9a0e32c04984ad199ebd31b62d9c1cc
+run_name: secretive-sponge-408
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751705030109
+status: 4
+tags: []
+user_id: root

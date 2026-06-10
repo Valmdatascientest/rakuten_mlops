@@ -1,17 +1,17 @@
-# 🛍️ Rakuten Multimodal MLOps
+#  Rakuten Multimodal MLOps
 
 [![CI](https://github.com/Valmdatascientest/rakuten_mlops/actions/workflows/ci.yml/badge.svg)](https://github.com/Valmdatascientest/rakuten_mlops/actions/workflows/ci.yml)
 
 Projet MLOps de classification multimodale combinant texte et image pour la catégorisation de produits Rakuten.
 
-## 📋 Description
+##  Description
 
 Cette API utilise des modèles de Machine Learning pour classifier des produits en combinant :
 - **Texte** : Description et désignation du produit (Transformer XLM-Roberta)
 - **Image** : Photo du produit (EfficientNet)
 - **Fusion multimodale** : Classification finale combinant les deux modalités
 
-## 🏗️ Architecture
+##  Architecture
 
 ```
 📦 RAKUTEN_MLOPS
@@ -34,7 +34,7 @@ Cette API utilise des modèles de Machine Learning pour classifier des produits 
     └── test_prediction_endpoint.py
 ```
 
-## 🚀 Démarrage rapide
+##  Démarrage rapide
 
 ### 1. Prérequis
 - Docker & Docker Compose
@@ -64,7 +64,7 @@ curl -X POST "http://127.0.0.1:8000/predict/multimodal" \
   -F "image=@./dataset/images/image_test/image_example.jpg"
 ```
 
-## 🧪 Tests
+##  Tests
 
 ### Lancement des tests
 
@@ -117,7 +117,7 @@ pytest /app/tests/ -v
 pytest /app/tests/test_basic_endpoint.py::TestHealthEndpoints -v -s
 ```
 
-## 📊 Résultats attendus des tests
+##  Résultats attendus des tests
 
 Après exécution, vous devriez voir :
 ```
@@ -133,7 +133,7 @@ tests/test_prediction_endpoint.py::TestPredictionSuccess::test_valid_prediction 
 ========================= 32 passed in XX.XXs =========================
 ```
 
-## 🔍 Endpoints disponibles
+##  Endpoints disponibles
 
 ### Endpoints de base
 - `GET /test` - Test simple de l'API
@@ -147,7 +147,7 @@ tests/test_prediction_endpoint.py::TestPredictionSuccess::test_valid_prediction 
 - `GET /docs` - Documentation Swagger interactive
 - `GET /redoc` - Documentation ReDoc
 
-## 🛠️ Commandes utiles
+##  Commandes utiles
 
 ### Gestion des containers
 ```bash
@@ -175,7 +175,7 @@ docker compose down -v
 docker system prune -f
 ```
 
-## 📈 Coverage des tests
+##  Coverage des tests
 
 Les tests couvrent :
 - ✅ **Endpoints de base** (santé, informations)
@@ -185,7 +185,7 @@ Les tests couvrent :
 - ✅ **Format des réponses** (JSON, types de données)
 - ✅ **Cas limites** (images corrompues, texte long)
 
-## 🚨 Troubleshooting
+##  Troubleshooting
 
 ### Tests échouent
 ```bash
@@ -216,7 +216,7 @@ docker system prune --all --volumes --force
 docker compose up --build
 ```
 
-## 📝 Technologies utilisées
+##  Technologies utilisées
 
 - **Backend** : FastAPI, Python 3.11
 - **ML** : PyTorch, PyTorch Lightning, Transformers
@@ -226,7 +226,7 @@ docker compose up --build
 - **Containerisation** : Docker, Docker Compose
 - **Tests** : Pytest, HTTPx
 
-## 🔐 Sécurité et hygiène du dépôt
+##  Sécurité et hygiène du dépôt
 
 - Les secrets sont fournis via `.env`, ignoré par Git.
 - `.env.example` documente les variables attendues sans exposer de vraies valeurs.

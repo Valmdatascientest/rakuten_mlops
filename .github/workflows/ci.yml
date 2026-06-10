@@ -1,0 +1,30 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  hygiene:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Check Python syntax for application code
+        run: python -m compileall config.py src models tests
+
+      - name: Ensure local env file is not tracked
+        run: |
+          test ! -f .env
+          test -f .env.example
+
+      - name: Check for macOS artifacts
+        run: |
+          if find . -name ".DS_Store" | grep -q .; then
+            echo "Remove .DS_Store files from the repository"
+            exit 1
+          fi

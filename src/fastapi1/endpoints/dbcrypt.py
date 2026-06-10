@@ -1,4 +1,5 @@
 import psycopg2
+import os
 from passlib.context import CryptContext
 
 # Configurer le contexte de cryptage
@@ -13,20 +14,24 @@ def hash_password(password: str):
 
 # Configuration de la connexion à la base de données
 def get_db_connection():
+    database_url = os.getenv("DATABASE_URL")
+    if database_url:
+        return psycopg2.connect(database_url)
+
     conn = psycopg2.connect(
-        dbname="rakuten_auth",
-        user="admin",
-        password="admin123",  # Remplacez par votre mot de passe ou utilisez une variable d'environnement
-        host="postgres",  # Assurez-vous que le nom d'hôte est correct
-        port="5432"
+        dbname=os.getenv("POSTGRES_DB", "rakuten_auth"),
+        user=os.getenv("POSTGRES_USER", "admin"),
+        password=os.environ["POSTGRES_PASSWORD"],
+        host=os.getenv("POSTGRES_HOST", "postgres"),
+        port=os.getenv("POSTGRES_PORT", "5432"),
     )
     return conn
 
-# Liste des utilisateurs avec leurs mots de passe en clair
+# Comptes de démonstration. Les mots de passe viennent exclusivement de l'environnement.
 users = [
-    {"username": "admin", "full_name": "Admin User", "email": "admin@example.com", "password": "admin_password", "role": "admin"},
-    {"username": "dev", "full_name": "Dev User", "email": "dev@example.com", "password": "dev_password", "role": "dev"},
-    {"username": "client", "full_name": "Client User", "email": "client@example.com", "password": "client_password", "role": "client"}
+    {"username": "admin", "full_name": "Admin User", "email": "admin@example.com", "password": os.environ["ADMIN_USER_PASSWORD"], "role": "admin"},
+    {"username": "dev", "full_name": "Dev User", "email": "dev@example.com", "password": os.environ["DEV_USER_PASSWORD"], "role": "dev"},
+    {"username": "client", "full_name": "Client User", "email": "client@example.com", "password": os.environ["CLIENT_USER_PASSWORD"], "role": "client"},
 ]
 
 # Fonction pour insérer les utilisateurs dans la base de données
@@ -69,4 +74,3 @@ def insert_users():
 
 if __name__ == "__main__":
     insert_users()
-

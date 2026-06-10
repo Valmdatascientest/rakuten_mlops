@@ -7,6 +7,7 @@ from typing import Optional
 from datetime import datetime, timedelta
 from jose import JWTError, jwt
 import psycopg2
+import os
 from psycopg2.extras import DictCursor
 from passlib.context import CryptContext
 
@@ -16,12 +17,16 @@ templates = Jinja2Templates(directory="src/fastapi1/endpoints")
 
 # Connexion à la base PostgreSQL
 def get_db_connection():
+    database_url = os.getenv("DATABASE_URL")
+    if database_url:
+        return psycopg2.connect(database_url)
+
     return psycopg2.connect(
-        dbname="rakuten_auth",
-        user="admin",
-        password="admin123",
-        host="postgres",
-        port="5432"
+        dbname=os.getenv("POSTGRES_DB", "rakuten_auth"),
+        user=os.getenv("POSTGRES_USER", "admin"),
+        password=os.environ["POSTGRES_PASSWORD"],
+        host=os.getenv("POSTGRES_HOST", "postgres"),
+        port=os.getenv("POSTGRES_PORT", "5432"),
     )
 
 # Modèles Pydantic
@@ -36,8 +41,8 @@ class UserInDB(User):
     hashed_password: str
 
 # Sécurité
-SECRET_KEY = "supersecretkey"
-ALGORITHM = "HS256"
+SECRET_KEY = os.environ["SECRET_KEY"]
+ALGORITHM = os.getenv("JWT_ALGORITHM", "HS256")
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")

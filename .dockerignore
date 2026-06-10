@@ -32,6 +32,9 @@ __pycache__/
 pip-cache/
 
 # Environnements virtuels
+.env
+.env.*
+!.env.example
 venv/
 env/
 .conda/

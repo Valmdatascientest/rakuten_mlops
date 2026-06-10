@@ -56,8 +56,4 @@ dvc[s3]
 prometheus-fastapi-instrumentator
 
 #Nginx
-httpx
-python-jose
-dotenv
-
 

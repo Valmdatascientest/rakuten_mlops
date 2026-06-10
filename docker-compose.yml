@@ -43,6 +43,9 @@ services:
     command: ["python", "src/fastapi1/endpoints/dbcrypt.py"]
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      ADMIN_USER_PASSWORD: ${ADMIN_USER_PASSWORD}
+      DEV_USER_PASSWORD: ${DEV_USER_PASSWORD}
+      CLIENT_USER_PASSWORD: ${CLIENT_USER_PASSWORD}
     restart: "no"
 
   api:
@@ -55,6 +58,8 @@ services:
       - "8000:8000"
     environment:
       DATABASE_URL: postgresql://admin:${POSTGRES_PASSWORD}@postgres:5432/rakuten_auth
+      SECRET_KEY: ${SECRET_KEY}
+      JWT_ALGORITHM: ${JWT_ALGORITHM:-HS256}
       MODEL_PATH: /app/models/multimodal_transformer_classifier/model
       NVIDIA_VISIBLE_DEVICES: all
       NVIDIA_DRIVER_CAPABILITIES: compute,utility
@@ -164,7 +169,7 @@ services:
       - "3000:3000"
     environment:
       - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD}
       - GF_AUTH_DISABLE_INITIAL_ADMIN_CHANGE=true
     volumes:
       - grafana_data:/var/lib/grafana
@@ -209,8 +214,8 @@ services:
         - mlflow
         - airflow
       environment:
-        SECRET_KEY: supersecretkey
-        JWT_ALGORITHM: HS256
+        SECRET_KEY: ${SECRET_KEY}
+        JWT_ALGORITHM: ${JWT_ALGORITHM:-HS256}
       volumes:
         - ./src:/app/src
         - .env:/opt/gateway/.env

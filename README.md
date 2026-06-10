@@ -1,6 +1,8 @@
-# 🛍️ Rakuten Multimodal API
+# 🛍️ Rakuten Multimodal MLOps
 
-API de classification multimodale combinant texte et image pour la catégorisation de produits Rakuten.
+[![CI](https://github.com/Valmdatascientest/rakuten_mlops/actions/workflows/ci.yml/badge.svg)](https://github.com/Valmdatascientest/rakuten_mlops/actions/workflows/ci.yml)
+
+Projet MLOps de classification multimodale combinant texte et image pour la catégorisation de produits Rakuten.
 
 ## 📋 Description
 
@@ -36,7 +38,15 @@ Cette API utilise des modèles de Machine Learning pour classifier des produits 
 
 ### 1. Prérequis
 - Docker & Docker Compose
-- Fichier `.env` avec `POSTGRES_PASSWORD=your_password`
+- Accès aux artefacts DVC pour restaurer `dataset/` et les modèles
+- Fichier `.env` local créé depuis `.env.example`
+
+```bash
+cp .env.example .env
+# Éditer ensuite les valeurs sensibles dans .env
+```
+
+> Important : `.env` ne doit jamais être versionné. Si une valeur sensible a déjà été exposée, elle doit être changée/rotatée.
 
 ### 2. Lancement de l'API
 ```bash
@@ -215,3 +225,10 @@ docker compose up --build
 - **Base de données** : PostgreSQL
 - **Containerisation** : Docker, Docker Compose
 - **Tests** : Pytest, HTTPx
+
+## 🔐 Sécurité et hygiène du dépôt
+
+- Les secrets sont fournis via `.env`, ignoré par Git.
+- `.env.example` documente les variables attendues sans exposer de vraies valeurs.
+- Les datasets et modèles lourds sont suivis via DVC, pas directement dans Git.
+- La CI vérifie la syntaxe Python et l'absence de fichiers locaux sensibles comme `.env` ou `.DS_Store`.
